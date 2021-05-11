@@ -191,12 +191,12 @@
                     android:layout_gravity="center_vertical|center_horizontal">
 
                     <ImageView
-                        android:id="@+id/homeBtnImageView"
+                        android:id="@+id/BudgetBtnImageView"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         android:src="@drawable/budget"/>
                     <TextView
-                        android:id="@+id/homeBtnTextView"
+                        android:id="@+id/BudgetBtnTextView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="My Budget"

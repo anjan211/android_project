@@ -5,37 +5,27 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".BudgetActivity">
+    tools:context=".WeekSpendingActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="?attr/actionBarSize"
         android:background="#000"
-        android:id="@+id/toolbar"
-        android:elevation="4dp"
+        android:id="@+id/my_Feed_Toolbar"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        android:elevation="4dp"/>
 
     <TextView
-        android:id="@+id/totalBudgetAmountTextView"
+        android:id="@+id/totalWeekAmountTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="total Budget amount: $0"
+        android:text="Total Week amount: €0"
         android:textSize="25sp"
         android:textStyle="bold"
         android:textAlignment="center"
         android:textColor="#000"
         android:layout_marginTop="5dp"/>
-
-    <EditText
-        android:id="@+id/inputsearch"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Filter Item Here...."
-        android:layout_margin="20dp"
-        android:textColor="@color/black"/>
-
-
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
@@ -46,15 +36,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            app:fabSize="normal"
-            android:id="@+id/fab"
-            app:backgroundTint="#000"
-            android:src="@drawable/ic_add"
-            android:layout_margin="16dp"/>
+
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 

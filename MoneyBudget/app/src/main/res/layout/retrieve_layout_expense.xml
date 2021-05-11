@@ -35,7 +35,6 @@
                 android:textSize="18sp"
                 android:id="@+id/amount"/>
             <TextView
-                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Payment"

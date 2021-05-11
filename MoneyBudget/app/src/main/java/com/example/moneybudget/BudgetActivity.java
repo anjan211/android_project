@@ -9,7 +9,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +35,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import org.joda.time.DateTime;
@@ -56,6 +59,7 @@ public class BudgetActivity extends AppCompatActivity {
     private DatabaseReference budgetRef;
     private FirebaseAuth mAuth;
     private ProgressDialog loader;
+    private EditText inputsearch;
 
     private String post_key = "";
     private String item = "";
@@ -74,6 +78,7 @@ public class BudgetActivity extends AppCompatActivity {
 
         totalBudgetAmountTextView = findViewById((R.id.totalBudgetAmountTextView));
         recyclerView = findViewById(R.id.recyclerView);
+        inputsearch = findViewById(R.id.inputsearch);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setStackFromEnd(true);
@@ -106,6 +111,32 @@ public class BudgetActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 additem();
+            }
+        });
+
+        onStart("");
+
+        inputsearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+                if(s.toString()!=null){
+                    onStart(s.toString());
+                }
+                else{
+                    onStart("");
+                }
+
             }
         });
     }
@@ -178,7 +209,7 @@ public class BudgetActivity extends AppCompatActivity {
                     Weeks weeks = Weeks.weeksBetween(epoch, now);
                     Months months = Months.monthsBetween(epoch, now);
 
-                    Data data = new Data(budgtItem,date,id, null,Integer.parseInt(budgetAmount),months.getMonths());
+                    Data data = new Data(budgtItem,date,id, null,null,Integer.parseInt(budgetAmount),months.getMonths(),weeks.getWeeks());
                     budgetRef.child(id).setValue(data).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
@@ -208,12 +239,12 @@ public class BudgetActivity extends AppCompatActivity {
 
 
 
-    @Override
-    protected void onStart() {
-        super.onStart();
+    private void onStart(String filter) {
+
+        Query query= budgetRef.orderByChild("item").startAt(filter).endAt(filter + "\uf8ff");
 
         FirebaseRecyclerOptions<Data> options = new FirebaseRecyclerOptions.Builder<Data>()
-                .setQuery(budgetRef,Data.class)
+                .setQuery(query,Data.class)
                 .build();
 
         FirebaseRecyclerAdapter<Data,MyViewHolder> adapter = new FirebaseRecyclerAdapter<Data, MyViewHolder>(options){
@@ -357,7 +388,7 @@ public class BudgetActivity extends AppCompatActivity {
                 Weeks weeks = Weeks.weeksBetween(epoch, now);
                 Months months = Months.monthsBetween(epoch, now);
 
-                Data data = new Data(item,date,post_key, null,amount,months.getMonths());
+                Data data = new Data(item,date,post_key, null,null,amount,months.getMonths(),weeks.getWeeks());
                 budgetRef.child(post_key).setValue(data).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {

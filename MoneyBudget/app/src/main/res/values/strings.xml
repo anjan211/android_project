@@ -3,7 +3,7 @@
 
 
     <string-array name="items">
-        <item>Select Item</item>
+        <item>Select  Item</item>
         <item>Transport</item>
         <item>Food</item>
         <item>House</item>
