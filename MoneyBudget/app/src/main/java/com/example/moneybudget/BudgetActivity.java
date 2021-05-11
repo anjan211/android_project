@@ -158,6 +158,7 @@ public class BudgetActivity extends AppCompatActivity {
         final Button save = myView.findViewById(R.id.save);
         final Button Addbut = myView.findViewById(R.id.Addbut);
         final EditText add_bi = myView.findViewById(R.id.additem);
+        final Spinner currencySpinner = myView.findViewById(R.id.currencyspinner);
 
         Addbut.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -183,6 +184,21 @@ public class BudgetActivity extends AppCompatActivity {
 
                 String budgetAmount = amount.getText().toString();
                 String budgtItem = itemSpinner.getSelectedItem().toString();
+                String cur_pay = currencySpinner.getSelectedItem().toString();
+
+                switch (cur_pay){
+                    case "Dollar":
+                        budgetAmount = String.valueOf((int) (Integer.parseInt(budgetAmount) * 0.82));
+                        break;
+
+                    case "Pound":
+                        budgetAmount = String.valueOf((int) (Integer.parseInt(budgetAmount) * 1.16));
+                        break;
+
+                    case "INR":
+                        budgetAmount = String.valueOf((int) (Integer.parseInt(budgetAmount) * 0.011));
+                        break;
+                }
 
                 if (TextUtils.isEmpty(budgetAmount)){
                     amount.setError("Amount is required!");
@@ -209,7 +225,7 @@ public class BudgetActivity extends AppCompatActivity {
                     Weeks weeks = Weeks.weeksBetween(epoch, now);
                     Months months = Months.monthsBetween(epoch, now);
 
-                    Data data = new Data(budgtItem,date,id, null,null,Integer.parseInt(budgetAmount),months.getMonths(),weeks.getWeeks());
+                    Data data = new Data(budgtItem,date,id, null,null,cur_pay,Integer.parseInt(budgetAmount),months.getMonths(),weeks.getWeeks());
                     budgetRef.child(id).setValue(data).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
@@ -388,7 +404,7 @@ public class BudgetActivity extends AppCompatActivity {
                 Weeks weeks = Weeks.weeksBetween(epoch, now);
                 Months months = Months.monthsBetween(epoch, now);
 
-                Data data = new Data(item,date,post_key, null,null,amount,months.getMonths(),weeks.getWeeks());
+                Data data = new Data(item,date,post_key, null,null,"Euros",amount,months.getMonths(),weeks.getWeeks());
                 budgetRef.child(post_key).setValue(data).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {

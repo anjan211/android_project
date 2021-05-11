@@ -165,6 +165,7 @@ public class TodaySpendingActivity extends AppCompatActivity {
         final EditText note = myView.findViewById(R.id.note);
         final Button cancel = myView.findViewById(R.id.cancel);
         final Button save = myView.findViewById(R.id.save);
+        final Spinner currencySpinner = myView.findViewById(R.id.currencyspinner);
 
         note.setVisibility(View.VISIBLE);
 
@@ -176,6 +177,21 @@ public class TodaySpendingActivity extends AppCompatActivity {
                 String Item = itemSpinner.getSelectedItem().toString();
                 String notes = note.getText().toString();
                 String Payment = paymentSpinner.getSelectedItem().toString();
+                String cur_pay = currencySpinner.getSelectedItem().toString();
+
+                switch (cur_pay){
+                    case "Dollar":
+                        Amount = String.valueOf((int) (Integer.parseInt(Amount) * 0.82));
+                        break;
+
+                    case "Pound":
+                        Amount = String.valueOf((int) (Integer.parseInt(Amount) * 1.16));
+                        break;
+
+                    case "INR":
+                        Amount = String.valueOf((int) (Integer.parseInt(Amount) * 0.011));
+                        break;
+                }
 
                 if (TextUtils.isEmpty(Amount)){
                     amount.setError("Amount is required!");
@@ -211,7 +227,7 @@ public class TodaySpendingActivity extends AppCompatActivity {
                     Weeks weeks = Weeks.weeksBetween(epoch, now);
                     Months months = Months.monthsBetween(epoch, now);
 
-                    Data data = new Data(Item, date, id, notes,Payment, Integer.parseInt(Amount), months.getMonths(),weeks.getWeeks());
+                    Data data = new Data(Item, date, id, notes,Payment,cur_pay, Integer.parseInt(Amount), months.getMonths(),weeks.getWeeks());
                     expensesRef.child(id).setValue(data).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
