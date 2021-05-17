@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -13,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -36,6 +39,10 @@ public class MainActivity extends AppCompatActivity {
 
     private ImageView BudgetBtnImageView,todayBtnImageView,weekBtnImageView,monthBtnImageView,analyticsImageView;
     private Toolbar savingstoolbar;
+    private FloatingActionButton logout;
+    private long backPressedTime;
+    private Toast backToast;
+
 
     private TextView weekSpendingTv,budgetTv,todaySpendingTv,remainingBudgetTv,monthSpendingTv;
 
@@ -54,6 +61,10 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().hide();
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN );
         setContentView(R.layout.activity_main);
+
+        logout = findViewById(R.id.logout);
+
+
 
         savingstoolbar= findViewById(R.id.savingstoolbar);
         savingstoolbar.setTitle("Budget Widget");
@@ -116,6 +127,32 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                builder.setMessage("Are you sure to logout?");
+                builder.setCancelable(true);
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+                builder.setPositiveButton("Logout", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        mAuth.signOut();
+                        startActivity(new Intent(MainActivity.this,LoginActivity.class));
+                    }
+                });
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+            }
+        });
+
+
 
         budgetRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -303,4 +340,23 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+    @Override
+    public void onBackPressed() {
+        if (backPressedTime+2000 > System.currentTimeMillis()) {
+            backToast.cancel();
+            Intent intent = new Intent(Intent.ACTION_MAIN);
+            intent.addCategory(Intent.CATEGORY_HOME);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            //super.onBackPressed();
+            //MainActivity.this.finish();
+            //System.exit(0);
+            //return;
+        } else {
+            backToast = Toast.makeText(getBaseContext(), "Press back again to exit", Toast.LENGTH_SHORT);
+            backToast.show();
+        }
+        backPressedTime = System.currentTimeMillis();
+    }
+
 }

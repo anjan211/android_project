@@ -38,6 +38,14 @@ public class LoginActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_login);
 
+        mAuth = FirebaseAuth.getInstance();
+
+        //login only once piece of code added
+
+        if (mAuth.getCurrentUser()!=null) {
+            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+        }
+
 
         authStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -56,7 +64,7 @@ public class LoginActivity extends AppCompatActivity {
         loginBtn = findViewById(R.id.loginBtn);
         loginQn = findViewById(R.id.loginQn);
 
-        mAuth = FirebaseAuth.getInstance();
+
         progressDialog = new ProgressDialog(this);
 
 
