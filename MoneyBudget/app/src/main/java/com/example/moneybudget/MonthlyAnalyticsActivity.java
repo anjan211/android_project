@@ -14,9 +14,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class DailyAnalyticsActivity extends AppCompatActivity {
-    private Toolbar settingsToolbar;
+public class MonthlyAnalyticsActivity extends AppCompatActivity {
 
+    private Toolbar settingsToolbar;
 
     private FirebaseAuth mAuth;
     private String onlineUserId = "";
@@ -31,15 +31,16 @@ public class DailyAnalyticsActivity extends AppCompatActivity {
     private AnyChartView anyChartView;
     private TextView progress_ratio_transport,progress_ratio_food,progress_ratio_house,progress_ratio_ent,progress_ratio_edu,progress_ratio_cha, progress_ratio_app,progress_ratio_hea,progress_ratio_per,progress_ratio_oth, monthRatioSpending;
     private ImageView status_Image_transport, status_Image_food,status_Image_house,status_Image_ent,status_Image_edu,status_Image_cha,status_Image_app,status_Image_hea,status_Image_per,status_Image_oth, monthRatioSpending_Image;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN );
-        setContentView(R.layout.activity_daily_analytics);
+        setContentView(R.layout.activity_monthly_analytics);
 
         settingsToolbar = findViewById(R.id.my_Feed_Toolbar);
-        settingsToolbar.setTitle("Today Analytics");
+        settingsToolbar.setTitle("Monthly Analytics");
 
 
         mAuth = FirebaseAuth.getInstance();
@@ -104,6 +105,5 @@ public class DailyAnalyticsActivity extends AppCompatActivity {
 
         //anyChartView
         anyChartView = findViewById(R.id.anyChartView);
-
     }
 }

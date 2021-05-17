@@ -9,7 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MoneyBudget">
-        <activity android:name=".DailyAnalyticsActivity"></activity>
+        <activity android:name=".MonthlyAnalyticsActivity"></activity>
+        <activity android:name=".WeeklyAnalyticsActivity" />
+        <activity android:name=".ChooseAnalyticsActivity" />
+        <activity android:name=".DailyAnalyticsActivity" />
         <activity android:name=".WeekSpendingActivity" />
         <activity android:name=".TodaySpendingActivity" />
         <activity android:name=".BudgetActivity" />

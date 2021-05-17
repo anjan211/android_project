@@ -2,19 +2,22 @@ package com.example.moneybudget;
 
 public class Data {
 
-    String item, date, id, notes, payment, currency;
+    String item, date, id, notes, payment, currency,ItemNday,ItemNweek,ItemNmonth;
     int amount, month, week;
 
     public Data() {
     }
 
-    public Data(String item, String date, String id, String notes, String payment, String currency, int amount, int month, int week) {
+    public Data(String item, String date, String id, String notes, String payment, String currency, String itemNday, String itemNweek, String itemNmonth, int amount, int month, int week) {
         this.item = item;
         this.date = date;
         this.id = id;
         this.notes = notes;
         this.payment = payment;
         this.currency = currency;
+        ItemNday = itemNday;
+        ItemNweek = itemNweek;
+        ItemNmonth = itemNmonth;
         this.amount = amount;
         this.month = month;
         this.week = week;
@@ -66,6 +69,30 @@ public class Data {
 
     public void setCurrency(String currency) {
         this.currency = currency;
+    }
+
+    public String getItemNday() {
+        return ItemNday;
+    }
+
+    public void setItemNday(String itemNday) {
+        ItemNday = itemNday;
+    }
+
+    public String getItemNweek() {
+        return ItemNweek;
+    }
+
+    public void setItemNweek(String itemNweek) {
+        ItemNweek = itemNweek;
+    }
+
+    public String getItemNmonth() {
+        return ItemNmonth;
+    }
+
+    public void setItemNmonth(String itemNmonth) {
+        ItemNmonth = itemNmonth;
     }
 
     public int getAmount() {

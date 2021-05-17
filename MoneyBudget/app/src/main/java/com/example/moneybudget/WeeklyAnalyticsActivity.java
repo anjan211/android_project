@@ -14,7 +14,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class DailyAnalyticsActivity extends AppCompatActivity {
+public class WeeklyAnalyticsActivity extends AppCompatActivity {
     private Toolbar settingsToolbar;
 
 
@@ -36,10 +36,10 @@ public class DailyAnalyticsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN );
-        setContentView(R.layout.activity_daily_analytics);
+        setContentView(R.layout.activity_weekly_analytics);
 
         settingsToolbar = findViewById(R.id.my_Feed_Toolbar);
-        settingsToolbar.setTitle("Today Analytics");
+        settingsToolbar.setTitle("Weekly Analytics");
 
 
         mAuth = FirebaseAuth.getInstance();
@@ -104,6 +104,5 @@ public class DailyAnalyticsActivity extends AppCompatActivity {
 
         //anyChartView
         anyChartView = findViewById(R.id.anyChartView);
-
     }
 }
