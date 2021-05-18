@@ -355,38 +355,37 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/aboutCardView"
+                android:id="@+id/helpCardView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_row="2"
-                android:layout_rowWeight="1"
                 android:layout_column="1"
-                android:layout_columnWeight="1"
                 android:layout_gravity="fill"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
                 android:layout_margin="8dp"
-                android:background="#fff"
                 app:cardCornerRadius="10dp"
-                app:cardElevation="8dp">
-
+                app:cardElevation="8dp"
+                android:background="#fff"
+                >
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical|center_horizontal"
+                    android:orientation="vertical"
                     android:gravity="center"
-                    android:orientation="vertical">
+                    android:layout_gravity="center_vertical|center_horizontal">
 
                     <ImageView
                         android:layout_width="60dp"
                         android:layout_height="60dp"
-                        android:src="@drawable/ic_history" />
-
+                        android:src="@drawable/ic_baseline_help_outline_24"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="About"
-                        android:textAlignment="center"
+                        android:text="Help"
+                        android:textStyle="bold"
                         android:textColor="#000"
-                        android:textStyle="bold" />
+                        android:textAlignment="center"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
