@@ -31,6 +31,7 @@
                 android:layout_height="wrap_content"
                 android:hint="Enter New Item"
                 android:id="@+id/additem"
+                android:textSize="18sp"
                 android:textColor="#000"
                 android:textColorHint="#000"/>
             <Button
@@ -46,6 +47,7 @@
                 android:id="@+id/itemsspinner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textSize="18sp"
                 android:gravity="center"
                 android:entries="@array/items"
                 android:layout_gravity="center"

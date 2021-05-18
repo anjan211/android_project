@@ -87,6 +87,15 @@
                 android:textColor="#000"
                 android:textColorHint="#000"/>
 
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/switchRepeatedTransaction"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:switchPadding="15dp"
+                android:text="Recurring Expense"
+                android:layout_marginTop="10dp" />
+
+
         </LinearLayout>
 
         <LinearLayout
