@@ -9,8 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MoneyBudget">
+        <activity android:name=".PreferenceActivity"></activity>
         <activity android:name=".HelpActivity"
             android:parentActivityName=".MainActivity">></activity>
+
         <activity android:name=".MonthlyAnalyticsActivity" />
         <activity android:name=".WeeklyAnalyticsActivity" />
         <activity android:name=".ChooseAnalyticsActivity" />

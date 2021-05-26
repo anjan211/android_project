@@ -6,8 +6,10 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
@@ -39,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ImageView BudgetBtnImageView,todayBtnImageView,weekBtnImageView,monthBtnImageView,analyticsImageView;
     private Toolbar savingstoolbar;
-    private FloatingActionButton logout;
+    private FloatingActionButton logout,default_currency;
     private long backPressedTime;
     private Toast backToast;
     private CardView helpCardView;
@@ -64,11 +66,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         logout = findViewById(R.id.logout);
+        default_currency = findViewById(R.id.default_currency);
 
-
+        SharedPreferences sp = getApplicationContext().getSharedPreferences("MyUserPrefs", Context.MODE_PRIVATE);
+        String cur = sp.getString("Currency","");
 
         savingstoolbar= findViewById(R.id.savingstoolbar);
-        savingstoolbar.setTitle("Budget Widget");
+        savingstoolbar.setTitle("Budget Widget:"+cur);
 
         budgetTv = findViewById(R.id.budgetTv);
         todaySpendingTv = findViewById(R.id.todaySpendingTv);
@@ -134,6 +138,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this,HelpActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        default_currency.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this,PreferenceActivity.class);
                 startActivity(intent);
             }
         });
@@ -211,11 +223,11 @@ public class MainActivity extends AppCompatActivity {
                         Object total = map.get("amount");
                         int pTotal = Integer.parseInt(String.valueOf(total));
                         totalAmountBudget+=pTotal;
-                        budgetTv.setText("$ "+String.valueOf(totalAmountBudget));
+                        budgetTv.setText("€ "+String.valueOf(totalAmountBudget));
                     }
                 }else {
                     totalAmountBudget=0;
-                    budgetTv.setText("$ "+String.valueOf(0));
+                    budgetTv.setText("€ "+String.valueOf(0));
 
 
                 }

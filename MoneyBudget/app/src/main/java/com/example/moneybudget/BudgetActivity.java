@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -72,6 +73,8 @@ public class BudgetActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN );
         setContentView(R.layout.activity_budget);
 
+
+
         mAuth = FirebaseAuth.getInstance();
         budgetRef = FirebaseDatabase.getInstance().getReference().child("budget").child(mAuth.getCurrentUser().getUid());
         loader = new ProgressDialog(this);
@@ -94,7 +97,7 @@ public class BudgetActivity extends AppCompatActivity {
                 for(DataSnapshot snap: snapshot.getChildren()){
                     Data data = snap.getValue(Data.class);
                     totalAmount += data.getAmount();
-                    String sTotal = String.valueOf("Month budget(Euros):"+totalAmount);
+                    String sTotal = String.valueOf("Month budget:"+totalAmount);
                     totalBudgetAmountTextView.setText(sTotal);
                 }
             }
@@ -182,23 +185,82 @@ public class BudgetActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                SharedPreferences sp = getApplicationContext().getSharedPreferences("MyUserPrefs", Context.MODE_PRIVATE);
+                String cur = sp.getString("Currency","");
+
                 String budgetAmount = amount.getText().toString();
                 String budgtItem = itemSpinner.getSelectedItem().toString();
                 String cur_pay = currencySpinner.getSelectedItem().toString();
 
-                switch (cur_pay){
-                    case "Dollar":
-                        budgetAmount = String.valueOf((int) (Integer.parseInt(budgetAmount) * 0.82));
+                switch (cur){
+                    case "Euros":
+                        switch (cur_pay){
+                            case "Dollar":
+                                budgetAmount = String.valueOf((int) (Integer.parseInt(budgetAmount) * 0.82));
+                                break;
+
+                            case "Pound":
+                                budgetAmount = String.valueOf((int) (Integer.parseInt(budgetAmount) * 1.16));
+                                break;
+
+                            case "INR":
+                                budgetAmount = String.valueOf((int) (Integer.parseInt(budgetAmount) * 0.011));
+                                break;
+                        }
                         break;
 
                     case "Pound":
-                        budgetAmount = String.valueOf((int) (Integer.parseInt(budgetAmount) * 1.16));
+
+                        switch (cur_pay){
+                            case "Euros":
+                                budgetAmount = String.valueOf((int) (Integer.parseInt(budgetAmount) * 0.86));
+                                break;
+
+                            case "Dollar":
+                                budgetAmount = String.valueOf((int) (Integer.parseInt(budgetAmount) * 0.71));
+                                break;
+
+                            case "INR":
+                                budgetAmount = String.valueOf((int) (Integer.parseInt(budgetAmount) * 0.0097));
+                                break;
+                        }
                         break;
 
                     case "INR":
-                        budgetAmount = String.valueOf((int) (Integer.parseInt(budgetAmount) * 0.011));
+
+                        switch (cur_pay){
+                            case "Pound":
+                                budgetAmount = String.valueOf((int) (Integer.parseInt(budgetAmount) * 102.75));
+                                break;
+
+                            case "Dollar":
+                                budgetAmount = String.valueOf((int) (Integer.parseInt(budgetAmount) * 72.74));
+                                break;
+
+                            case "Euros":
+                                budgetAmount = String.valueOf((int) (Integer.parseInt(budgetAmount) * 88.76));
+                                break;
+                        }
+                        break;
+
+                    case "Dollar":
+
+                        switch (cur_pay){
+                            case "Pound":
+                                budgetAmount = String.valueOf((int) (Integer.parseInt(budgetAmount) * 1.41));
+                                break;
+
+                            case "INR":
+                                budgetAmount = String.valueOf((int) (Integer.parseInt(budgetAmount) * 0.014));
+                                break;
+
+                            case "Euros":
+                                budgetAmount = String.valueOf((int) (Integer.parseInt(budgetAmount) * 1.22));
+                                break;
+                        }
                         break;
                 }
+
 
                 if (TextUtils.isEmpty(budgetAmount)){
                     amount.setError("Amount is required!");
