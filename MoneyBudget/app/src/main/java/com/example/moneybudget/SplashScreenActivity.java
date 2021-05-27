@@ -14,10 +14,10 @@ import android.widget.TextView;
 
 public class SplashScreenActivity extends AppCompatActivity {
 
-    private static int SPLASH = 3000;
-    Animation animation;
+    private static int SPLASH = 5000;
+    Animation animation, bottom_anim;
     private ImageView imageView;
-    private TextView appName;
+    private TextView appName,appAbout;
 
 
     @Override
@@ -28,11 +28,14 @@ public class SplashScreenActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash_screen);
 
         animation = AnimationUtils.loadAnimation(this,R.anim.animation);
+        bottom_anim = AnimationUtils.loadAnimation(this,R.anim.bottom_anim);
         imageView = findViewById(R.id.imageView);
         appName = findViewById(R.id.appName);
+        appAbout = findViewById(R.id.appAbout);
 
         imageView.setAnimation(animation);
-        appName.setAnimation(animation);
+        appName.setAnimation(bottom_anim);
+        appAbout.setAnimation(bottom_anim);
 
         new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
             @Override
