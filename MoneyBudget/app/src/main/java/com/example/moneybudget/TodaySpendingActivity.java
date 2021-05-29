@@ -2,13 +2,18 @@ package com.example.moneybudget;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -16,6 +21,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.SearchView;
 import android.widget.Spinner;
@@ -48,12 +54,15 @@ import java.util.Map;
 
 public class TodaySpendingActivity extends AppCompatActivity {
 
+    private static final int RESULT_PICK_CONTACT = 1;
+    private TextView viewContact;
+    private Button selectContact;
+
     private Toolbar toolbar;
     private TextView totalAmountSpentOn;
     private RecyclerView recyclerView;
     private FloatingActionButton fab;
     private ProgressDialog loader;
-
 
 
     private FirebaseAuth mAuth;
@@ -78,7 +87,6 @@ public class TodaySpendingActivity extends AppCompatActivity {
 
         fab = findViewById(R.id.fab);
         loader = new ProgressDialog(this);
-
 
 
         mAuth = FirebaseAuth.getInstance();
@@ -166,6 +174,27 @@ public class TodaySpendingActivity extends AppCompatActivity {
         final Button cancel = myView.findViewById(R.id.cancel);
         final Button save = myView.findViewById(R.id.save);
         final Spinner currencySpinner = myView.findViewById(R.id.currencyspinner);
+        final SwitchCompat switchCompat=myView.findViewById(R.id.switchRepeatedTransaction);
+
+        viewContact = myView.findViewById(R.id.viewContact);
+        selectContact = myView.findViewById(R.id.selectContact);
+
+        switchCompat.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    Toast.makeText(getBaseContext(), "Recurring transaction selected", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        selectContact.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.CommonDataKinds.Phone.CONTENT_URI);
+                startActivityForResult(intent, RESULT_PICK_CONTACT);
+            }
+        });
 
         note.setVisibility(View.VISIBLE);
 
@@ -212,6 +241,7 @@ public class TodaySpendingActivity extends AppCompatActivity {
                 }
 
                 else {
+
                     loader.setMessage("adding a budget item");
                     loader.setCanceledOnTouchOutside(false);
                     loader.show();
@@ -260,5 +290,40 @@ public class TodaySpendingActivity extends AppCompatActivity {
         dialog.show();
 
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode,  Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case RESULT_PICK_CONTACT:
+                    contactPicked(data);
+                    break;
+            }
+        } else {
+            Toast.makeText(this, "Failed To pick contact", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void contactPicked(Intent data) {
+        Cursor cursor = null;
+
+        try {
+            String phoneNo = null;
+            Uri uri = data.getData ();
+            cursor = getContentResolver ().query (uri, null, null,null,null);
+            cursor.moveToFirst ();
+            int phoneIndex = cursor.getColumnIndex (ContactsContract.CommonDataKinds.Phone.NUMBER);
+
+            phoneNo = cursor.getString (phoneIndex);
+
+            viewContact.setText (phoneNo);
+
+
+        } catch (Exception e) {
+            e.printStackTrace ();
+        }
+    }
+
 
 }
