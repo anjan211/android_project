@@ -291,7 +291,7 @@ public class BudgetActivity extends AppCompatActivity {
                     String itemNweek= budgtItem+weeks.getWeeks();
                     String itemNmonth = budgtItem+months.getMonths();
 
-                    Data data = new Data(budgtItem,date,id, null,null,cur_pay,itemNday,itemNweek,itemNmonth,Integer.parseInt(budgetAmount),months.getMonths(),weeks.getWeeks());
+                    Data data = new Data(budgtItem,date,id, null,null,cur_pay, null,itemNday,itemNweek,itemNmonth,Integer.parseInt(budgetAmount),months.getMonths(),weeks.getWeeks());
                     budgetRef.child(id).setValue(data).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
@@ -474,7 +474,7 @@ public class BudgetActivity extends AppCompatActivity {
                 String itemNweek= item+weeks.getWeeks();
                 String itemNmonth = item+months.getMonths();
 
-                Data data = new Data(item,date,post_key, null,null,"Euros",itemNday,itemNweek,itemNmonth,amount,months.getMonths(),weeks.getWeeks());
+                Data data = new Data(item,date,post_key, null,null,"Euros",null, itemNday,itemNweek,itemNmonth,amount,months.getMonths(),weeks.getWeeks());
                 budgetRef.child(post_key).setValue(data).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {

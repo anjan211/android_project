@@ -207,6 +207,7 @@ public class TodaySpendingActivity extends AppCompatActivity {
                 String notes = note.getText().toString();
                 String Payment = paymentSpinner.getSelectedItem().toString();
                 String cur_pay = currencySpinner.getSelectedItem().toString();
+                String phoneNo = viewContact.getText().toString();
 
                 switch (cur_pay){
                     case "Dollar":
@@ -261,7 +262,7 @@ public class TodaySpendingActivity extends AppCompatActivity {
                     String itemNweek= Item+weeks.getWeeks();
                     String itemNmonth = Item+months.getMonths();
 
-                    Data data = new Data(Item, date, id, notes,Payment,cur_pay,itemNday,itemNweek,itemNmonth,Integer.parseInt(Amount), months.getMonths(),weeks.getWeeks());
+                    Data data = new Data(Item, date, id, notes,Payment,cur_pay,phoneNo,itemNday,itemNweek,itemNmonth,Integer.parseInt(Amount), months.getMonths(),weeks.getWeeks());
                     expensesRef.child(id).setValue(data).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
@@ -301,7 +302,7 @@ public class TodaySpendingActivity extends AppCompatActivity {
                     break;
             }
         } else {
-            Toast.makeText(this, "Failed To pick contact", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Failed to pick contact", Toast.LENGTH_SHORT).show();
         }
     }
 
