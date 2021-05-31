@@ -40,6 +40,7 @@ public class TodayItemsAdapter  extends  RecyclerView.Adapter<TodayItemsAdapter.
     private int amount = 0;
     private String note = "";
     private String payment = "";
+    private String contact = "";
 
 
     public TodayItemsAdapter(Context myContext, List<Data> myDataList) {
@@ -68,7 +69,8 @@ public class TodayItemsAdapter  extends  RecyclerView.Adapter<TodayItemsAdapter.
         holder.amount.setText("Amount:" + data.getAmount());
         holder.payment.setText("Payment:" + data.getPayment());
         holder.date.setText("On:"+data.getDate());
-        holder.notes.setText("Note :"+data.getNotes());
+        holder.notes.setText("Note:"+data.getNotes());
+        holder.contacts.setText("Contact:"+data.getContact());
 
 
         switch(data.getItem()){
@@ -112,6 +114,7 @@ public class TodayItemsAdapter  extends  RecyclerView.Adapter<TodayItemsAdapter.
                 amount = data.getAmount();
                 payment = data.getPayment();
                 note = data.getNotes();
+                contact = data.getContact();
                 updateData();
             }
         });
@@ -130,9 +133,13 @@ public class TodayItemsAdapter  extends  RecyclerView.Adapter<TodayItemsAdapter.
         final TextView mItem = myView.findViewById(R.id.itemName);
         final EditText mAmount = myView.findViewById(R.id.amount);
         final EditText mNotes = myView.findViewById(R.id.note);
+        final EditText mContact = myView.findViewById(R.id.contact);
         final Spinner Paymentspinner = myView.findViewById(R.id.paymentspinner);
 
         mNotes.setText(note);
+
+        mContact.setText(contact);
+        mContact.setVisibility(View.GONE);
 
         mItem.setText(item);
 
@@ -147,6 +154,7 @@ public class TodayItemsAdapter  extends  RecyclerView.Adapter<TodayItemsAdapter.
 
                 amount = Integer.parseInt(mAmount.getText().toString());
                 note = mNotes.getText().toString();
+                contact = mContact.getText().toString();
                 payment = Paymentspinner.getSelectedItem().toString();
 
                 DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
@@ -163,7 +171,7 @@ public class TodayItemsAdapter  extends  RecyclerView.Adapter<TodayItemsAdapter.
                 String itemNweek= item+weeks.getWeeks();
                 String itemNmonth = item+months.getMonths();
 
-                Data data = new Data(item,date,post_key,note,payment,"Euros",null ,itemNday,itemNweek,itemNmonth,amount,months.getMonths(),weeks.getWeeks());
+                Data data = new Data(item,date,post_key,note,payment,"Euros",contact ,itemNday,itemNweek,itemNmonth,amount,months.getMonths(),weeks.getWeeks());
                 DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Expenditure").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
                 reference.child(post_key).setValue(data).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
@@ -210,7 +218,7 @@ public class TodayItemsAdapter  extends  RecyclerView.Adapter<TodayItemsAdapter.
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 
-        public TextView item,amount,date,payment,notes;
+        public TextView item,amount,date,payment,notes,contacts;
         public ImageView imageView;
 
         public ViewHolder(@NonNull View itemView) {
@@ -222,6 +230,7 @@ public class TodayItemsAdapter  extends  RecyclerView.Adapter<TodayItemsAdapter.
             payment = itemView.findViewById(R.id.payment);
             notes = itemView.findViewById(R.id.note);
             imageView = itemView.findViewById(R.id.imageView);
+            contacts = itemView.findViewById(R.id.contact);
         }
     }
 }

@@ -40,6 +40,7 @@ public class WeekSpendingAdapter extends RecyclerView.Adapter<WeekSpendingAdapte
         holder.payment.setText("Payment:" + data.getPayment());
         holder.date.setText("On:"+data.getDate());
         holder.notes.setText("Note :"+data.getNotes());
+        holder.contacts.setText("Contact :"+data.getContact());
 
 
         switch(data.getItem()){
@@ -85,7 +86,7 @@ public class WeekSpendingAdapter extends RecyclerView.Adapter<WeekSpendingAdapte
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 
-        public TextView item,amount,date,payment,notes;
+        public TextView item,amount,date,payment,notes,contacts;
         public ImageView imageView;
 
         public ViewHolder(@NonNull View itemView) {
@@ -96,6 +97,7 @@ public class WeekSpendingAdapter extends RecyclerView.Adapter<WeekSpendingAdapte
             date = itemView.findViewById(R.id.date);
             payment = itemView.findViewById(R.id.payment);
             notes = itemView.findViewById(R.id.note);
+            contacts = itemView.findViewById(R.id.contact);
             imageView = itemView.findViewById(R.id.imageView);
         }
     }

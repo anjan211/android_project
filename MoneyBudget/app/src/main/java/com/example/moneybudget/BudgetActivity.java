@@ -338,6 +338,8 @@ public class BudgetActivity extends AppCompatActivity {
                 holder.setItemName("BudgetItem :"+model.getItem());
 
                 holder.notes.setVisibility(View.GONE);
+                holder.contacts.setVisibility(View.GONE);
+
 
                 switch(model.getItem()){
                     case "Transport":
@@ -403,7 +405,7 @@ public class BudgetActivity extends AppCompatActivity {
     public class MyViewHolder extends RecyclerView.ViewHolder{
         View myView;
         public ImageView imageView;
-        public TextView notes,date;
+        public TextView notes,date,contacts;
 
 
 
@@ -412,6 +414,7 @@ public class BudgetActivity extends AppCompatActivity {
             myView = itemView;
             imageView = itemView.findViewById(R.id.imageView);
             notes = itemView.findViewById(R.id.note);
+            contacts = itemView.findViewById(R.id.contact);
             date = itemView.findViewById(R.id.date);
 
         }
@@ -444,8 +447,10 @@ public class BudgetActivity extends AppCompatActivity {
         final TextView mItem = myView.findViewById(R.id.itemName);
         final EditText mAmount = myView.findViewById(R.id.amount);
         final EditText mNotes = myView.findViewById(R.id.note);
+        final EditText mContact = myView.findViewById(R.id.contact);
 
         mNotes.setVisibility(View.GONE);
+        mContact.setVisibility(View.GONE);
 
         mItem.setText(item);
 
