@@ -2,7 +2,7 @@ package com.example.moneybudget;
 
 public class Data {
 
-    String item, date, id, notes, payment, currency, contact, ItemNday,ItemNweek,ItemNmonth;
+    String item, date, id, notes, payment, currency,contact,ItemNday,ItemNweek,ItemNmonth;
     int amount, month, week;
 
     public Data() {

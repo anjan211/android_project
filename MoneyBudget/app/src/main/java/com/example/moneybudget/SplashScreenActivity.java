@@ -29,13 +29,17 @@ public class SplashScreenActivity extends AppCompatActivity {
 
         animation = AnimationUtils.loadAnimation(this,R.anim.animation);
         bottom_anim = AnimationUtils.loadAnimation(this,R.anim.bottom_anim);
+
         imageView = findViewById(R.id.imageView);
         appName = findViewById(R.id.appName);
         appAbout = findViewById(R.id.appAbout);
 
+
         imageView.setAnimation(animation);
+        appName.setAnimation(animation);
         appName.setAnimation(bottom_anim);
         appAbout.setAnimation(bottom_anim);
+
 
         new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
             @Override

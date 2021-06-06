@@ -4,7 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -39,6 +41,8 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         mAuth = FirebaseAuth.getInstance();
+        SharedPreferences sp = getApplicationContext().getSharedPreferences("MyUserPrefs", Context.MODE_PRIVATE);
+        String cur = sp.getString("Currency", "");
 
         //login only once piece of code added
 
@@ -99,12 +103,21 @@ public class LoginActivity extends AppCompatActivity {
                     mAuth.signInWithEmailAndPassword(emailString, passwordString).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
+                            if (task.isSuccessful()&&cur ==null) {
+                                Intent intent = new Intent(LoginActivity.this, PreferenceActivity.class);
+                                startActivity(intent);
+                                finish();
+                                progressDialog.dismiss();
+                            }
+
+                            else if (task.isSuccessful()&&cur !=null){
                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                 startActivity(intent);
                                 finish();
                                 progressDialog.dismiss();
-                            } else {
+                            }
+
+                             else {
                                 Toast.makeText(LoginActivity.this, task.getException().toString(), Toast.LENGTH_SHORT).show();
                                 progressDialog.dismiss();
                             }

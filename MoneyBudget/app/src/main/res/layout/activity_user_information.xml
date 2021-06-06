@@ -34,7 +34,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="User Information Request"
+            android:text="Account Information"
             android:textStyle="bold"
             android:textColor="#000"
             android:textSize="25sp"
@@ -60,35 +60,47 @@
             android:layout_margin="10dp"
             android:textAllCaps="true"
             />
-        <EditText
+        <TextView
+            android:id="@+id/Name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Enter Your Name"
-            android:id="@+id/User_name"
+            android:text="-"
             android:textSize="18sp"
             android:textColor="#000"
-            android:textColorHint="#000"/>
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Date of Birth"
-            android:id="@+id/dob"
-            android:inputType="date"
-            android:textSize="18sp"
-            android:textColor="#000"
-            android:textColorHint="#000"/>
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_margin="10dp"
+            android:textAllCaps="true"
+            />
 
-    <Spinner
-        android:id="@+id/currency_pref"
-        android:layout_width="wrap_content"
-        android:layout_height="0.2in"
-        android:layout_gravity="center"
-        android:background="#fff"
-        android:entries="@array/currency"
-        />
+        <TextView
+            android:id="@+id/Dob_user"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="-"
+            android:textSize="18sp"
+            android:textColor="#000"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_margin="10dp"
+            android:textAllCaps="true"
+            />
+
+        <TextView
+            android:id="@+id/Def_cur"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="-"
+            android:textSize="18sp"
+            android:textColor="#000"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_margin="10dp"
+            android:textAllCaps="true"
+            />
 
         <Button
-            android:id="@+id/save_pref"
+            android:id="@+id/back_main"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/buttons"
@@ -96,10 +108,12 @@
             android:layout_marginBottom="30dp"
             android:layout_marginRight="30dp"
             android:layout_marginLeft="30dp"
-            android:text="Save Information"
+            android:text="Go Back"
             android:textColor="#fff"
             android:textStyle="bold"
             android:textSize="20sp"/>
 
-</LinearLayout>
+
+
+    </LinearLayout>
 </LinearLayout>

@@ -9,7 +9,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -20,6 +22,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -54,16 +57,15 @@ import java.util.Map;
 
 public class TodaySpendingActivity extends AppCompatActivity {
 
-    private static final int RESULT_PICK_CONTACT = 1;
-    private TextView viewContact;
-    private Button selectContact;
-
     private Toolbar toolbar;
     private TextView totalAmountSpentOn;
     private RecyclerView recyclerView;
     private FloatingActionButton fab;
     private ProgressDialog loader;
 
+    private static final int RESULT_PICK_CONTACT = 1;
+    private TextView viewContact;
+    private Button selectContact;
 
     private FirebaseAuth mAuth;
     private String onlineUserId = "";
@@ -89,9 +91,11 @@ public class TodaySpendingActivity extends AppCompatActivity {
         loader = new ProgressDialog(this);
 
 
+
         mAuth = FirebaseAuth.getInstance();
         onlineUserId = mAuth.getCurrentUser().getUid();
         expensesRef = FirebaseDatabase.getInstance().getReference("Expenditure").child(onlineUserId);
+        expensesRef.keepSynced(true);
 
         recyclerView = findViewById(R.id.recyclerView);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
@@ -145,7 +149,7 @@ public class TodaySpendingActivity extends AppCompatActivity {
                     int pTotal = Integer.parseInt(String.valueOf(total));
                     totalAmount += pTotal;
 
-                    totalAmountSpentOn.setText("Total Day's Spending : €" +totalAmount);
+                    totalAmountSpentOn.setText("Total Day's Spending : " +totalAmount);
                 }
 
             }
@@ -166,14 +170,37 @@ public class TodaySpendingActivity extends AppCompatActivity {
 
         final AlertDialog dialog = myDialog.create();
         dialog.setCancelable(false);
+        ArrayList<String> list = new ArrayList<>();
 
         final Spinner itemSpinner = myView.findViewById(R.id.itemsspinner);
         final Spinner paymentSpinner = myView.findViewById(R.id.paymentspinner);
         final EditText amount = myView.findViewById(R.id.amount);
         final EditText note = myView.findViewById(R.id.note);
+        final Button Addbut = myView.findViewById(R.id.Addbut);
         final Button cancel = myView.findViewById(R.id.cancel);
+        final EditText add_bi = myView.findViewById(R.id.additem);
         final Button save = myView.findViewById(R.id.save);
         final Spinner currencySpinner = myView.findViewById(R.id.currencyspinner);
+
+        Addbut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                list.add(add_bi.getText().toString());
+            }
+        });
+
+        list.add("Select Item");
+        list.add("Transport");
+        list.add("Entertainment");
+        list.add("Charity");
+        list.add("Food");
+        list.add("House");
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, list);
+        adapter.notifyDataSetChanged();
+        itemSpinner.setAdapter(adapter);
+
         final SwitchCompat switchCompat=myView.findViewById(R.id.switchRepeatedTransaction);
 
         viewContact = myView.findViewById(R.id.viewContact);
@@ -196,6 +223,7 @@ public class TodaySpendingActivity extends AppCompatActivity {
             }
         });
 
+
         note.setVisibility(View.VISIBLE);
 
         save.setOnClickListener(new View.OnClickListener() {
@@ -209,19 +237,79 @@ public class TodaySpendingActivity extends AppCompatActivity {
                 String cur_pay = currencySpinner.getSelectedItem().toString();
                 String phoneNo = viewContact.getText().toString();
 
-                switch (cur_pay){
-                    case "Dollar":
-                        Amount = String.valueOf((int) (Integer.parseInt(Amount) * 0.82));
+
+                SharedPreferences sp = getApplicationContext().getSharedPreferences("MyUserPrefs", Context.MODE_PRIVATE);
+                String cur = sp.getString("Currency","");
+
+                switch (cur){
+                    case "Euros":
+                        switch (cur_pay){
+                            case "Dollar":
+                                Amount = String.valueOf((int) (Integer.parseInt(Amount) * 0.82));
+                                break;
+
+                            case "Pound":
+                                Amount = String.valueOf((int) (Integer.parseInt(Amount) * 1.16));
+                                break;
+
+                            case "INR":
+                                Amount = String.valueOf((int) (Integer.parseInt(Amount) * 0.011));
+                                break;
+                        }
                         break;
 
                     case "Pound":
-                        Amount = String.valueOf((int) (Integer.parseInt(Amount) * 1.16));
+
+                        switch (cur_pay){
+                            case "Euros":
+                                Amount = String.valueOf((int) (Integer.parseInt(Amount) * 0.86));
+                                break;
+
+                            case "Dollar":
+                                Amount = String.valueOf((int) (Integer.parseInt(Amount) * 0.71));
+                                break;
+
+                            case "INR":
+                                Amount = String.valueOf((int) (Integer.parseInt(Amount) * 0.0097));
+                                break;
+                        }
                         break;
 
                     case "INR":
-                        Amount = String.valueOf((int) (Integer.parseInt(Amount) * 0.011));
+
+                        switch (cur_pay){
+                            case "Pound":
+                                Amount = String.valueOf((int) (Integer.parseInt(Amount) * 102.75));
+                                break;
+
+                            case "Dollar":
+                                Amount = String.valueOf((int) (Integer.parseInt(Amount) * 72.74));
+                                break;
+
+                            case "Euros":
+                                Amount = String.valueOf((int) (Integer.parseInt(Amount) * 88.76));
+                                break;
+                        }
+                        break;
+
+                    case "Dollar":
+
+                        switch (cur_pay){
+                            case "Pound":
+                                Amount = String.valueOf((int) (Integer.parseInt(Amount) * 1.41));
+                                break;
+
+                            case "INR":
+                                Amount = String.valueOf((int) (Integer.parseInt(Amount) * 0.014));
+                                break;
+
+                            case "Euros":
+                                Amount = String.valueOf((int) (Integer.parseInt(Amount) * 1.22));
+                                break;
+                        }
                         break;
                 }
+
 
                 if (TextUtils.isEmpty(Amount)){
                     amount.setError("Amount is required!");
@@ -242,8 +330,7 @@ public class TodaySpendingActivity extends AppCompatActivity {
                 }
 
                 else {
-
-                    loader.setMessage("adding a budget item");
+                    loader.setMessage("Adding an expense item");
                     loader.setCanceledOnTouchOutside(false);
                     loader.show();
 
@@ -325,6 +412,8 @@ public class TodaySpendingActivity extends AppCompatActivity {
             e.printStackTrace ();
         }
     }
+
+
 
 
 }
