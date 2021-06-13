@@ -40,6 +40,7 @@
         android:textColorHint="@color/black"
         android:id="@+id/note"
         android:textColor="@color/black"/>
+
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -47,6 +48,7 @@
         android:textColorHint="@color/black"
         android:id="@+id/contact"
         android:textColor="@color/black"/>
+
 
     <LinearLayout
         android:layout_width="match_parent"

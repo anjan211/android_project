@@ -78,6 +78,7 @@
                 android:id="@+id/note"
                 android:textColor="#000"
                 android:textColorHint="#000"/>
+
             <EditText
                 android:visibility="gone"
                 android:layout_width="match_parent"
@@ -86,6 +87,7 @@
                 android:id="@+id/contact"
                 android:textColor="#000"
                 android:textColorHint="#000"/>
+
 
         </LinearLayout>
 

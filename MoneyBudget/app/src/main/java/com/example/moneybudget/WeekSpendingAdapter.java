@@ -43,6 +43,8 @@ public class WeekSpendingAdapter extends RecyclerView.Adapter<WeekSpendingAdapte
         holder.contacts.setText("Contact :"+data.getContact());
 
 
+
+
         switch(data.getItem()){
             case "Transport":
                 holder.imageView.setImageResource(R.drawable.ic_transport);

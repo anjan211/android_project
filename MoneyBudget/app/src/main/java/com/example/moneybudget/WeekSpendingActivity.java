@@ -89,6 +89,7 @@ public class WeekSpendingActivity extends AppCompatActivity {
 
 
         expensesRef = FirebaseDatabase.getInstance().getReference("Expenditure").child(onlineUserId);
+        expensesRef.keepSynced(true);
         Query query = expensesRef.orderByChild("month").equalTo(months.getMonths());
 
         query.addValueEventListener(new ValueEventListener() {

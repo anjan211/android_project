@@ -68,11 +68,9 @@ public class MainActivity extends AppCompatActivity {
         logout = findViewById(R.id.logout);
         default_currency = findViewById(R.id.default_currency);
 
-        SharedPreferences sp = getApplicationContext().getSharedPreferences("MyUserPrefs", Context.MODE_PRIVATE);
-        String cur = sp.getString("Currency","");
 
         savingstoolbar= findViewById(R.id.savingstoolbar);
-        savingstoolbar.setTitle("Budget Widget:"+cur);
+        savingstoolbar.setTitle("Budget Widget");
 
         budgetTv = findViewById(R.id.budgetTv);
         todaySpendingTv = findViewById(R.id.todaySpendingTv);
@@ -83,8 +81,11 @@ public class MainActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         onlineUserID = FirebaseAuth.getInstance().getCurrentUser().getUid();
         budgetRef = FirebaseDatabase.getInstance().getReference("budget").child(onlineUserID);
+        budgetRef.keepSynced(true);
         expensesRef = FirebaseDatabase.getInstance().getReference("expenses").child(onlineUserID);
+        expensesRef.keepSynced(true);
         personalRef = FirebaseDatabase.getInstance().getReference("personal").child(onlineUserID);
+        personalRef.keepSynced(true);
 
         BudgetBtnImageView = findViewById(R.id.BudgetBtnImageView);
         todayBtnImageView = findViewById(R.id.todayBtnImageView);
@@ -145,7 +146,7 @@ public class MainActivity extends AppCompatActivity {
         default_currency.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this,PreferenceActivity.class);
+                Intent intent = new Intent(MainActivity.this,UserInformationActivity.class);
                 startActivity(intent);
             }
         });

@@ -50,6 +50,7 @@
                 android:textColor="#000"
                 android:textSize="18sp"
                 android:id="@+id/note"/>
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -58,6 +59,7 @@
                 android:textColor="#000"
                 android:textSize="18sp"
                 android:id="@+id/contact"/>
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

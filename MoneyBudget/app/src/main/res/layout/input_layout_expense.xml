@@ -119,9 +119,7 @@
                     android:textColor="@color/white"
                     android:textStyle="bold"
                     android:layout_marginEnd="6dp"/>
-
             </LinearLayout>
-
 
         </LinearLayout>
 
