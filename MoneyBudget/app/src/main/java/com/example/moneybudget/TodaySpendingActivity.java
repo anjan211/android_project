@@ -315,10 +315,11 @@ public class TodaySpendingActivity extends AppCompatActivity {
             cursor = getContentResolver ().query (uri, null, null,null,null);
             cursor.moveToFirst ();
             int phoneIndex = cursor.getColumnIndex (ContactsContract.CommonDataKinds.Phone.NUMBER);
-
             phoneNo = cursor.getString (phoneIndex);
 
-            viewContact.setText (phoneNo);
+            String contactName = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
+
+            viewContact.setText (contactName);
 
 
         } catch (Exception e) {
