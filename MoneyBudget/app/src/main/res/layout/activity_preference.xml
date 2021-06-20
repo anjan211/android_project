@@ -83,7 +83,7 @@
         android:layout_width="wrap_content"
         android:layout_height="0.2in"
         android:layout_gravity="center"
-        android:background="#F44336"
+        android:background="#fff"
         android:entries="@array/currency"
         />
 
