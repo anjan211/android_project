@@ -113,6 +113,20 @@
             android:textStyle="bold"
             android:textSize="20sp"/>
 
+        <Button
+            android:id="@+id/export"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/buttons"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginLeft="30dp"
+            android:text="Export User Data"
+            android:textColor="#fff"
+            android:textStyle="bold"
+            android:textSize="20sp"/>
+
 
 
     </LinearLayout>
