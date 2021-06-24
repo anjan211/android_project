@@ -3,12 +3,17 @@ package com.example.moneybudget;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -231,9 +236,24 @@ public class BudgetActivity extends AppCompatActivity {
         adapter.notifyDataSetChanged();
         itemSpinner.setAdapter(adapter);
 
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            NotificationChannel channel = new NotificationChannel("Budget Added","Budget Notification",NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationManager manager = getSystemService(NotificationManager.class);
+            manager.createNotificationChannel(channel);
+        }
+
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                NotificationCompat.Builder builder = new NotificationCompat.Builder(BudgetActivity.this,"Budget Added");
+                builder.setContentTitle("Budget Item Added");
+                builder.setContentText("Budget Widget got added with a new budget item with a monthly budget");
+                builder.setSmallIcon(R.drawable.budget);
+                builder.setAutoCancel(true);
+
+                NotificationManagerCompat managerCompat = NotificationManagerCompat.from(BudgetActivity.this);
+                managerCompat.notify(1,builder.build());
 
                 SharedPreferences sp = getApplicationContext().getSharedPreferences("MyUserPrefs", Context.MODE_PRIVATE);
                 String cur = sp.getString("Currency", "");

@@ -4,16 +4,21 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.AlertDialog;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.Editable;
@@ -263,9 +268,24 @@ public class TodaySpendingActivity extends AppCompatActivity {
 
         note.setVisibility(View.VISIBLE);
 
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            NotificationChannel channel = new NotificationChannel("Expense Added","Expense Notification", NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationManager manager = getSystemService(NotificationManager.class);
+            manager.createNotificationChannel(channel);
+        }
+
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                NotificationCompat.Builder builder = new NotificationCompat.Builder(TodaySpendingActivity.this,"Expense Added");
+                builder.setContentTitle("Expense Item Added");
+                builder.setContentText("Budget Widget got added with a new expense item for today");
+                builder.setSmallIcon(R.drawable.ic_anaytic);
+                builder.setAutoCancel(true);
+
+                NotificationManagerCompat managerCompat = NotificationManagerCompat.from(TodaySpendingActivity.this);
+                managerCompat.notify(2,builder.build());
 
                 String Amount = amount.getText().toString();
                 String Item = itemSpinner.getSelectedItem().toString();
@@ -439,11 +459,13 @@ public class TodaySpendingActivity extends AppCompatActivity {
             cursor = getContentResolver ().query (uri, null, null,null,null);
             cursor.moveToFirst ();
             int phoneIndex = cursor.getColumnIndex (ContactsContract.CommonDataKinds.Phone.NUMBER);
+
             phoneNo = cursor.getString (phoneIndex);
 
             String contactName = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
 
             viewContact.setText (contactName);
+
 
 
         } catch (Exception e) {
