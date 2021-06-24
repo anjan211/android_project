@@ -22,6 +22,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -201,19 +202,55 @@ public class TodaySpendingActivity extends AppCompatActivity {
         adapter.notifyDataSetChanged();
         itemSpinner.setAdapter(adapter);
 
-        final SwitchCompat switchCompat=myView.findViewById(R.id.switchRepeatedTransaction);
+//      final SwitchCompat switchCompat=myView.findViewById(R.id.switchRepeatedTransaction);
+        final Spinner selectRecurring = myView.findViewById(R.id.selectRecurring);
 
         viewContact = myView.findViewById(R.id.viewContact);
         selectContact = myView.findViewById(R.id.selectContact);
 
-        switchCompat.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//        switchCompat.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//                if (isChecked) {
+//                    Toast.makeText(getBaseContext(), "Recurring transaction selected", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        });
+
+        List<String> recCategories = new ArrayList<>();
+        recCategories.add(0, "Select period");
+        recCategories.add("Weekly");
+        recCategories.add("Monthly");
+        recCategories.add("Yearly");
+
+        ArrayAdapter<String> recAdapter;
+        recAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, recCategories);
+        recAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+        selectRecurring.setAdapter(recAdapter);
+
+        selectRecurring.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    Toast.makeText(getBaseContext(), "Recurring transaction selected", Toast.LENGTH_SHORT).show();
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                if (parent.getItemAtPosition(position).equals("Select period")) {
+                    // Do Nothing
                 }
+
+                else {
+
+                    String recItem = parent.getItemAtPosition(position).toString();
+                    Toast.makeText(getBaseContext(), "Selected: "+ recItem, Toast.LENGTH_SHORT).show();
+
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
             }
         });
+
 
         selectContact.setOnClickListener(new View.OnClickListener() {
             @Override
