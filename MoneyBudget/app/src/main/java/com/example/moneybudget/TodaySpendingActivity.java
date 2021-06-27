@@ -381,10 +381,10 @@ public class TodaySpendingActivity extends AppCompatActivity {
                     Toast.makeText(TodaySpendingActivity.this, "Select a valid mode of payment", Toast.LENGTH_SHORT).show();
                 }
 
-                if (TextUtils.isEmpty(notes)){
-                    note.setError("Note is required");
-                    return;
-                }
+//                if (TextUtils.isEmpty(notes)){
+//                    note.setError("Note is required");
+//                    return;
+//                }
 
                 else {
                     loader.setMessage("Adding an expense item");
