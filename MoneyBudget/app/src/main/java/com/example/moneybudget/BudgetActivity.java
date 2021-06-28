@@ -209,6 +209,7 @@ public class BudgetActivity extends AppCompatActivity {
         dialog.setCancelable(false);
 
         ArrayList<String> list = new ArrayList<>();
+        ArrayList<String> currency = new ArrayList<>();
 
         final Spinner itemSpinner = myView.findViewById(R.id.itemsspinner);
         final EditText amount = myView.findViewById(R.id.amount);
@@ -232,9 +233,19 @@ public class BudgetActivity extends AppCompatActivity {
         list.add("Charity");
         list.add("Food");
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, list);
+        currency.add("Select Currency");
+        currency.add("Euro");
+        currency.add("Pound");
+        currency.add("Dollar");
+        currency.add("INR");
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.color_spinner_layout, list);
         adapter.notifyDataSetChanged();
         itemSpinner.setAdapter(adapter);
+
+        ArrayAdapter<String> adapter_currency = new ArrayAdapter<String>(this, R.layout.color_spinner_layout, currency);
+        adapter_currency.notifyDataSetChanged();
+        currencySpinner.setAdapter(adapter_currency);
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
             NotificationChannel channel = new NotificationChannel("Budget Added","Budget Notification",NotificationManager.IMPORTANCE_DEFAULT);

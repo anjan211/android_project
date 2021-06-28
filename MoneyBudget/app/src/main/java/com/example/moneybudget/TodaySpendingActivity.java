@@ -177,8 +177,11 @@ public class TodaySpendingActivity extends AppCompatActivity {
         final AlertDialog dialog = myDialog.create();
         dialog.setCancelable(false);
         ArrayList<String> list = new ArrayList<>();
+        ArrayList<String> currency = new ArrayList<>();
+        ArrayList<String> payment = new ArrayList<>();
 
         final Spinner itemSpinner = myView.findViewById(R.id.itemsspinner);
+        final Spinner selectRecurring = myView.findViewById(R.id.selectRecurring);
         final Spinner paymentSpinner = myView.findViewById(R.id.paymentspinner);
         final EditText amount = myView.findViewById(R.id.amount);
         final EditText note = myView.findViewById(R.id.note);
@@ -203,24 +206,33 @@ public class TodaySpendingActivity extends AppCompatActivity {
         list.add("Food");
         list.add("House");
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, list);
+
+        currency.add("Select Currency of Payment");
+        currency.add("Euro");
+        currency.add("Pound");
+        currency.add("Dollar");
+        currency.add("INR");
+
+        payment.add("Select Mode of Payment");
+        payment.add("Online Payment");
+        payment.add("Card Payment");
+        payment.add("Cash Payment");
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.color_spinner_layout, list);
         adapter.notifyDataSetChanged();
         itemSpinner.setAdapter(adapter);
 
-//      final SwitchCompat switchCompat=myView.findViewById(R.id.switchRepeatedTransaction);
-        final Spinner selectRecurring = myView.findViewById(R.id.selectRecurring);
+        ArrayAdapter<String> adapter_currency = new ArrayAdapter<String>(this, R.layout.color_spinner_layout, currency);
+        adapter_currency.notifyDataSetChanged();
+        currencySpinner.setAdapter(adapter_currency);
+
+        ArrayAdapter<String> adapter_payment = new ArrayAdapter<String>(this, R.layout.color_spinner_layout, payment);
+        adapter_payment.notifyDataSetChanged();
+        paymentSpinner.setAdapter(adapter_payment);
+
 
         viewContact = myView.findViewById(R.id.viewContact);
         selectContact = myView.findViewById(R.id.selectContact);
-
-//        switchCompat.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                if (isChecked) {
-//                    Toast.makeText(getBaseContext(), "Recurring transaction selected", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//        });
 
         List<String> recCategories = new ArrayList<>();
         recCategories.add(0, "Select period");
@@ -229,12 +241,12 @@ public class TodaySpendingActivity extends AppCompatActivity {
         recCategories.add("Yearly");
 
         ArrayAdapter<String> recAdapter;
-        recAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, recCategories);
+        recAdapter = new ArrayAdapter<>(this, R.layout.color_spinner_layout, recCategories);
         recAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
         selectRecurring.setAdapter(recAdapter);
 
         selectRecurring.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
+
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                 if (parent.getItemAtPosition(position).equals("Select period")) {
@@ -255,6 +267,7 @@ public class TodaySpendingActivity extends AppCompatActivity {
 
             }
         });
+
 
 
         selectContact.setOnClickListener(new View.OnClickListener() {
@@ -381,10 +394,10 @@ public class TodaySpendingActivity extends AppCompatActivity {
                     Toast.makeText(TodaySpendingActivity.this, "Select a valid mode of payment", Toast.LENGTH_SHORT).show();
                 }
 
-//                if (TextUtils.isEmpty(notes)){
-//                    note.setError("Note is required");
-//                    return;
-//                }
+                // if (TextUtils.isEmpty(notes)){
+                // note.setError("Note is required");
+                // return;
+                //  }
 
                 else {
                     loader.setMessage("Adding an expense item");
