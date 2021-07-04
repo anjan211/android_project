@@ -30,7 +30,7 @@
         android:id="@+id/appAbout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="An app that controls your money"
+        android:text="An app that helps to control your money"
         android:textSize="20sp"
         android:fontFamily="sans-serif"
         android:textStyle="italic"
